@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF">
+	
+	<excludes>
+		<pattern>/login</pattern>
+		<pattern>/wy/**</pattern>
+	</excludes>
+	
+	
+	<decorator name="main" page="view/base/baseWrap.jsp">
+		<pattern>/**</pattern>
+	</decorator>
+</decorators>
