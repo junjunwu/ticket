@@ -94,7 +94,7 @@
 						<td><fmt:formatDate type="both" value="${ticket.departureTime}" pattern="yyyy-MM-dd HH:mm" /></td>
 						<td>${ticket.price}</td>
 						<td>${ticket.totalNum}</td>
-						<td>${ticket.saleNum}</td>
+						<td><a href="${base }/ticket/saleList?sale.ticketId=${ticket.id}" title="查看销售详情">${ticket.saleNum}</a></td>
 						<td>${ticket.coachType}</td>
 						<td><fmt:formatDate type="both" value="${ticket.createTime}"/></td>
 						<%-- <td><button type="button" class="btn btn-default btn-xs btn-info saleTicket" ticketId="${ticket.id }" disabled="disabled">售票</button></td> --%>

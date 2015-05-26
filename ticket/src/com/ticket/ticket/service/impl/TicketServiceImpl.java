@@ -11,6 +11,8 @@ import com.ticket.base.page.Pagination;
 import com.ticket.base.utils.MessageConstants;
 import com.ticket.base.utils.MyDateUtils;
 import com.ticket.ticket.dao.TicketDAO;
+import com.ticket.ticket.entity.SaleBean;
+import com.ticket.ticket.entity.SaleQueryBean;
 import com.ticket.ticket.entity.TicketBean;
 import com.ticket.ticket.entity.TicketQueryBean;
 import com.ticket.ticket.entity.TicketSaveBean;
@@ -81,5 +83,14 @@ public class TicketServiceImpl implements TicketService {
 			return MessageConstants.SUCCESS;
 		}
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.ticket.ticket.service.TicketService#getSaleListPage(com.ticket.ticket.entity.SaleQueryBean)
+	 */
+	@Override
+	public Pagination<SaleBean> getSaleListPage(SaleQueryBean query){
+		return ticketDAO.getSaleListPage(query);
+	}
+	
 
 }

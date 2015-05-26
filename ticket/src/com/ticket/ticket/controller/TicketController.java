@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ticket.base.utils.MessageConstants;
 import com.ticket.base.utils.MyDateUtils;
+import com.ticket.ticket.entity.SaleQueryBean;
 import com.ticket.ticket.entity.TicketQueryBean;
 import com.ticket.ticket.entity.TicketSaveBean;
 import com.ticket.ticket.service.TicketService;
@@ -72,6 +73,13 @@ public class TicketController {
 	public String sale(Integer ticketId,HttpSession session){
 		UserBean user = (UserBean) session.getAttribute("user");
 		return ticketService.sale(ticketId,user.getId());
+	}
+	
+	@RequestMapping(value="saleList", method = {RequestMethod.GET,RequestMethod.POST})
+	public String saleList(SaleQueryBean query, Model model){
+		model.addAttribute("pagination",ticketService.getSaleListPage(query));
+		model.addAttribute("query", query);
+		return "ticket/saleList";
 	}
 
 }

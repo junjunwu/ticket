@@ -1,6 +1,8 @@
 package com.ticket.ticket.service;
 
 import com.ticket.base.page.Pagination;
+import com.ticket.ticket.entity.SaleBean;
+import com.ticket.ticket.entity.SaleQueryBean;
 import com.ticket.ticket.entity.TicketBean;
 import com.ticket.ticket.entity.TicketQueryBean;
 import com.ticket.ticket.entity.TicketSaveBean;
@@ -42,5 +44,14 @@ public interface TicketService {
 	 * @param userId 
 	 */
 	String sale(Integer ticketId, Integer userId);
+
+	/**
+	 * 获取销售列表
+	 *
+	 * @param query
+	 * @return 
+	 * @author wujunjun
+	 */
+	Pagination<SaleBean> getSaleListPage(SaleQueryBean query);
 
 }

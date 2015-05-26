@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import com.ticket.base.dao.JdbcTemplateWrapper;
 import com.ticket.base.page.Pagination;
+import com.ticket.ticket.entity.SaleBean;
+import com.ticket.ticket.entity.SaleQueryBean;
 import com.ticket.ticket.entity.TicketBean;
 import com.ticket.ticket.entity.TicketQueryBean;
 
@@ -115,6 +117,28 @@ public class TicketDAO {
 	public int addSaleNum(Integer ticketId) {
 		String sql = "update ticket set salenum=saleNum+1 where id=?";
 		return jdbcTemplateWrapper.saveORUpdate(sql, new Object[]{ticketId});
+	}
+
+	/**
+	 * 
+	 *
+	 * @param query
+	 * @return 
+	 * @author wujunjun
+	 */
+	public Pagination<SaleBean> getSaleListPage(SaleQueryBean query) {
+		StringBuffer sql = new StringBuffer();
+		List args = new ArrayList();
+		sql.append("select s.*,u.realName as userName from saleRecord s,user u where s.userId=u.id ");
+		if(query.getSale()!= null){
+			if(query.getSale().getTicketId()!=null){
+				sql.append(" and s.ticketId=?");
+				args.add(query.getSale().getTicketId());
+			}
+		}
+	
+		sql.append(" order by saleTime desc");
+		return jdbcTemplateWrapper.queryForPage(query,sql.toString(), SaleBean.class, args.toArray());
 	}
 
 }
