@@ -4,6 +4,7 @@
 <html>
   <head>
     <title>售票详情</title>
+    
   </head>
 <body>
   <div class="panel panel-success">
@@ -16,7 +17,9 @@
 					<th>序号</th>
 					<th>ID</th>
 					<th>操作员</th>
+					<th>凭证号码</th>
 					<th>销售时间</th>
+					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -25,7 +28,9 @@
 						<td>${vs.count+pagination.pageSize*(pagination.pageNo-1) }</td>
 						<td>${sale.id}</td>
 						<td>${sale.userName}(ID:${sale.userId })</td>
+						<td>${sale.validNum}</td>
 						<td><fmt:formatDate type="both" value="${sale.saleTime}" pattern="yyyy-MM-dd HH:mm" /></td>
+						<td><a role="button" class="btn btn-default btn-xs btn-info printTicket" href="${base }/ticket/print?saleId=${sale.id }" target="_black">打印</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>

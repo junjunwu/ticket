@@ -20,6 +20,7 @@
 	<link href="${base }/res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<script src="${base }/res/js/jquery-1.11.3.min.js"></script>
     <script src="${base }/res/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${base }/res/bootstrap/js/respond.min.js"></script>
 	<style>
 		.container-main{
 			padding: 10px 20px 0 20px;
@@ -91,35 +92,40 @@
     </div>
     <div class="container-fluid">
         <div class="row  container-main">
-            <div class="col-md-2 well">
+            <div class="col-sm-2 well">
                 <ul id="main-nav" class="nav nav-tabs nav-stacked" style="">
                     <li>
                         <a href="#userMenu" class="nav-header collapsed" data-toggle="collapse" aria-expanded="false"  aria-controls="userMenu">
                             <i class="glyphicon glyphicon-user"></i>
                             	用户管理
-                               <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                               <!-- <span class="pull-right glyphicon glyphicon-chevron-down"></span> -->
                         </a>
                         <ul id="userMenu" class="nav nav-list collapse in secondmenu">
+                        	<c:if test="${user.userType==1 }">
                             <li><a href="${base }/user/add">添加操作员</a></li>
+                            </c:if>
                             <li><a href="${base }/user/list">操作员列表</a></li>
+                            <li><a href="${base }/user/updatePwd">修改密码</a></li>
                         </ul>
                     </li>
 					<li>
                         <a href="#msgMenu" class="nav-header collapsed" data-toggle="collapse">
                             <i class="glyphicon glyphicon-list-alt"></i>
                            		售票管理
-                               <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                               <!-- <span class="pull-right glyphicon glyphicon-chevron-down"></span> -->
                         </a>
                         <ul id="msgMenu" class="nav nav-list collapse in secondmenu">
-                            <li><a href="${base }/ticket/add">手动录入</a></li>
-                            <li><a href="${base }/ticket/add">导入数据</a></li>
-                            <li><a href="${base }/ticket/list">查询</a></li>
+                        	<c:if test="${user.userType==1 }">
+                            	<li><a href="${base }/ticket/add">手动录入</a></li>
+                            	<li><a href="${base }/ticket/upload">导入数据</a></li>
+                           	</c:if>
+                            <li><a href="${base }/ticket/list">车次列表</a></li>
                         </ul>
                     </li>
 					
                 </ul>
             </div>
-            <div class="col-md-10">
+            <div class="col-sm-10">
                 <decorator:body />
             </div>
         </div>

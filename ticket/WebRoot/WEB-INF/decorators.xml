@@ -3,7 +3,7 @@
 	
 	<excludes>
 		<pattern>/login</pattern>
-		<pattern>/wy/**</pattern>
+		<pattern>/ticket/print*</pattern>
 	</excludes>
 	
 	

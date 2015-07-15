@@ -20,8 +20,21 @@ public class SaleBean {
 	private Integer ticketId;
 	// 销售时间
 	private Date saleTime;
-
+	//凭证号
+	private String validNum;
+	
 	private String userName;
+	
+	
+	
+
+	public String getValidNum() {
+		return validNum;
+	}
+
+	public void setValidNum(String validNum) {
+		this.validNum = validNum;
+	}
 
 	public Integer getId() {
 		return id;

@@ -76,4 +76,16 @@ public class UserController {
 			return false;
 		}
 	}
+	
+	@RequestMapping(value="updatePwd", method = RequestMethod.GET)
+	public String updatePwd(){
+		return "user/updatePwd";
+	}
+	
+	@RequestMapping(value="updatePwd", method = RequestMethod.POST)
+	@ResponseBody
+	public String updatePwd(Integer userId,String prePwd,String newPwd){
+		
+		return userService.updatePwd(userId, prePwd,newPwd);
+	}
 }

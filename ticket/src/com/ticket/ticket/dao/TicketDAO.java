@@ -11,10 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import com.ticket.base.dao.JdbcTemplateWrapper;
 import com.ticket.base.page.Pagination;
+import com.ticket.base.utils.MyDateUtils;
 import com.ticket.ticket.entity.SaleBean;
 import com.ticket.ticket.entity.SaleQueryBean;
 import com.ticket.ticket.entity.TicketBean;
 import com.ticket.ticket.entity.TicketQueryBean;
+import com.ticket.ticket.entity.TicketSaveBean;
 
 /**  
  * 
@@ -79,8 +81,11 @@ public class TicketDAO {
 			sql.append(" and date_format(departureTime,'%Y-%m-%d')<=?");
 			args.add(query.getEndDate());
 		}
+		if(query.getAvailableOnly()!=null && query.getAvailableOnly()==1){
+			sql.append(" and departureTime>now() ");
+		}
 		
-		sql.append(" order by createTime desc");
+		sql.append(" order by coachNum asc,departureTime asc");
 		return jdbcTemplateWrapper.queryForPage(query,sql.toString(), TicketBean.class, args.toArray());
 	}
 
@@ -103,9 +108,11 @@ public class TicketDAO {
 	 * @param userId 
 	 * @author wujunjun
 	 */
-	public int addSaleRecord(Integer ticketId, Integer userId) {
-		String sql = "insert into SALERECORD(USERID, TICKETID, SALETIME) values(?, ?, ?)";
-		return jdbcTemplateWrapper.saveORUpdate(sql, new Object[]{userId,ticketId,new Date()});
+	public int addSaleRecord(Integer ticketId, Integer userId,String validNum) {
+		String sql = "insert into SALERECORD(USERID, TICKETID, SALETIME, VALIDNUM) values(?, ?, ?,?)";
+		jdbcTemplateWrapper.saveORUpdate(sql, new Object[]{userId,ticketId,new Date(),validNum});
+		String slq2 = "SELECT LAST_INSERT_ID()"; 
+		return jdbcTemplateWrapper.queryForInt(slq2, null);
 	}
 
 	/**
@@ -139,6 +146,57 @@ public class TicketDAO {
 	
 		sql.append(" order by saleTime desc");
 		return jdbcTemplateWrapper.queryForPage(query,sql.toString(), SaleBean.class, args.toArray());
+	}
+
+	/**
+	 * 批量添加
+	 *
+	 * @param list 
+	 * @author wujunjun
+	 */
+	public int batchAdd(List<TicketBean> list) {
+		String sql = "insert into TICKET(COACHNUM, TERMINUS, DEPARTURETIME, PRICE, TOTALNUM, SALENUM, COACHTYPE, CREATETIME) values(?, ?, ?, ?, ?, ?, ?, ?)";
+		List<Object[]> listArgs = new ArrayList<Object[]>();
+		for(TicketBean bean:list){
+			listArgs.add(new Object[]{bean.getCoachNum(),bean.getTerminus(),bean.getDepartureTime(),bean.getPrice(),bean.getTotalNum(),bean.getSaleNum(),bean.getCoachType(),bean.getCreateTime()});
+		}
+		return jdbcTemplateWrapper.batchUpdate(sql, listArgs);
+		
+	}
+
+	/**
+	 * 
+	 *
+	 * @param tId
+	 * @return 
+	 * @author wujunjun
+	 */
+	public TicketBean getTicketById(Integer tId) {
+		String sql = "select * from ticket where id=?";
+		return jdbcTemplateWrapper.queryForBean(sql, TicketBean.class, new Object[]{tId});
+	}
+
+	/**
+	 * 
+	 *
+	 * @param saleId
+	 * @return 
+	 * @author wujunjun
+	 */
+	public SaleBean getSaleById(Integer saleId) {
+		String sql = "select * from saleRecord where id=?";
+		return jdbcTemplateWrapper.queryForBean(sql, SaleBean.class, new Object[]{saleId});
+	}
+
+	/**
+	 * 修改车票信息
+	 *
+	 * @param bean 
+	 * @author wujunjun
+	 */
+	public int save(TicketBean bean) {
+		String sql = "update ticket set coachNum=?,terminus=?,departureTime=?,price=?,totalNum=?,coachType=? where id=?";
+		return jdbcTemplateWrapper.saveORUpdate(sql, new Object[]{bean.getCoachNum(),bean.getTerminus(),bean.getDepartureTime(),bean.getPrice(),bean.getTotalNum(),bean.getCoachType(),bean.getId()});
 	}
 
 }

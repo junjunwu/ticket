@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.ticket.base.utils.MyDateUtils;
+
 /**
  * 
  * 
@@ -33,6 +35,24 @@ public class TicketBean {
 	private String coachType;
 	// 创建时间
 	private Date createTime;
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "编号：" + id + " 班次：" + coachNum + " 终点站：" + terminus + " 发车时间:" 
+				+ MyDateUtils.formatDate(departureTime, "yyyy-MM-dd HH:mm") + " 票价：" + price + " 可售：" + saleNum + " 已售：" + saleNum;
+	}
+	
+	public String getDate(){
+		return MyDateUtils.formatDate(departureTime, "yyyy/MM/dd");
+	}
+	
+	public String getTime(){
+		return MyDateUtils.formatDate(departureTime, "HH:mm");
+	}
+
 
 	public Integer getId() {
 		return id;

@@ -59,4 +59,15 @@ public interface UserService {
 	 */
 	boolean resetPwd(Integer userId);
 
+	/**
+	 * 修改密码
+	 *
+	 * @param prePwd
+	 * @param newPwd
+	 * @return 
+	 * @author wujunjun
+	 * @param userId 
+	 */
+	String updatePwd(Integer userId, String prePwd, String newPwd);
+
 }

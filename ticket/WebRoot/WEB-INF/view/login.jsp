@@ -41,15 +41,13 @@
 					  <div class="form-group">
 					    <label for="inputEmail3" class="col-sm-3 control-label">登录名</label>
 					    <div class="col-sm-9">
-					      <%-- <input type="text" class="form-control" id="loginName" name="loginName" value="${loginName }" placeholder="LoginName"> --%>
-					      <input type="text" class="form-control" id="loginName" name="loginName" value="system" placeholder="LoginName">
+					      <input type="text" class="form-control" id="loginName" name="loginName" value="${loginName }" placeholder="LoginName">
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label for="inputPassword3" class="col-sm-3 control-label">密&nbsp;&nbsp;&nbsp;码</label>
 					    <div class="col-sm-9">
-					      <!-- <input type="password" class="form-control" id="password" name="password" placeholder="Password"> -->
-					      <input type="password" class="form-control" id="password" value="dg11185" name="password" placeholder="Password">
+					      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
 					    </div>
 					  </div>
 					  

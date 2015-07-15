@@ -5,9 +5,11 @@ import java.util.Date;
 import javax.annotation.Resource;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.ticket.base.page.Pagination;
+import com.ticket.base.utils.MessageConstants;
 import com.ticket.user.dao.UserDAO;
 import com.ticket.user.entity.UserBean;
 import com.ticket.user.entity.UserQueryBean;
@@ -74,5 +76,24 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public boolean resetPwd(Integer userId) {
 		return userDAO.updatePwd(userId,DigestUtils.md5Hex("123456")) > 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ticket.user.service.UserService#updatePwd(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public String updatePwd(Integer userId, String prePwd, String newPwd) {
+		if(userId == null || StringUtils.isBlank(prePwd) || StringUtils.isBlank(newPwd)){
+			return MessageConstants.PARAM_ERROR;
+		}
+		UserBean user = userDAO.getUserById(userId);
+		if(user == null){
+			return "user_not_exist";
+		}
+		if(!user.getPassword().equals(DigestUtils.md5Hex(prePwd))){
+			return "prepwd_error";
+		}
+		userDAO.updatePwd(userId, DigestUtils.md5Hex(newPwd));
+		return MessageConstants.SUCCESS;
 	}
 }

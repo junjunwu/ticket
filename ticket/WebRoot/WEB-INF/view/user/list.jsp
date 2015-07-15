@@ -23,6 +23,10 @@
     		});
     	
     	});
+    	function toPage(toPage){
+    		$("#pageNo").val(toPage);
+    		$("#searchForm").submit();
+    	}
     </script>
   </head>
 <body>
@@ -31,6 +35,7 @@
   <div class="panel-body">
 	  <div class="well search-well well-sm">
 	        <form class="form-inline text-center" id="searchForm" action="${base }/user/list" method="post">
+	          <input type="hidden" id="pageNo" value="${query.pageNo }" name="pageNo">
 			  <div class="form-group">
 			    <label for="realName">用户名</label>
 			    <input type="text" value="${query.user.realName }" class="form-control" id="realName" name="user.realName" placeholder="真实姓名..">
@@ -61,7 +66,7 @@
 						<td>${user.realName}</td>
 						<td>${user.sex==1?'男':'女'}</td>
 						<td><fmt:formatDate type="both" value="${user.createTime}"/></td>
-						<td><button type="button" class="btn btn-default btn-xs resetPwd" userId="${user.id }">重置密码</button></td>
+						<td><c:if test="${user.userType==1 }"><button type="button" class="btn btn-default btn-xs resetPwd" userId="${user.id }">重置密码</button></c:if></td>
 					</tr>
 				</c:forEach>
 			</tbody>

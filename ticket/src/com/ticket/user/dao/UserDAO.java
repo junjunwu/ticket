@@ -98,6 +98,18 @@ public class UserDAO {
 		return jdbcTemplateWrapper.saveORUpdate(sql, new Object[]{password, userId});
 	}
 
+	/**
+	 * 
+	 *
+	 * @param userId
+	 * @return 
+	 * @author wujunjun
+	 */
+	public UserBean getUserById(Integer userId) {
+		String sql = "select * from user where id=?";
+		return jdbcTemplateWrapper.queryForBean(sql, UserBean.class, new Object[]{userId});
+	}
+
 //	/**
 //	 * 
 //	 *

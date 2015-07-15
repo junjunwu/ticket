@@ -36,6 +36,16 @@ public class JdbcTemplateWrapper {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
 	
+	
+	
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
 	private final <T> List<T> query(String sql, Class<T> clazz, Object args[]) {
 		List<T> l = null;
 		try {

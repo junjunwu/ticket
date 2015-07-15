@@ -21,6 +21,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    This is my JSP page. <br>
+    <%response.sendRedirect(request.getContextPath() + "/login"); %>
   </body>
 </html>

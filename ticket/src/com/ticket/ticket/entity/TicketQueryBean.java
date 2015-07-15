@@ -15,6 +15,7 @@ public class TicketQueryBean extends QueryPageObject{
 	private TicketBean ticket;
 	private String beginDate;
 	private String endDate;
+	private Integer availableOnly ;
 
 	public TicketBean getTicket() {
 		return ticket;
@@ -39,8 +40,14 @@ public class TicketQueryBean extends QueryPageObject{
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	
-	
+
+	public Integer getAvailableOnly() {
+		return availableOnly;
+	}
+
+	public void setAvailableOnly(Integer availableOnly) {
+		this.availableOnly = availableOnly;
+	}
 	
 
 }

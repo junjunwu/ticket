@@ -103,17 +103,16 @@
 		 	});
 			
 			function subForm(){
-				alert($("#addForm").serialize())
         		$.ajax({
 					url: "${base}/ticket/save",
 					type:"POST",
 					data:$("#addForm").serialize(),
 					success:function(date){
 						if(date == "success"){
-							alert("添加成功");
+							alert("保存车票信息成功");
 							window.location = "${base}/ticket/list";
 						}else{
-							alert("添加失败");
+							alert("保存车票信息失败");
 						}
 					}
 				});	
@@ -127,24 +126,25 @@
   	<div class="panel-heading h3" style="margin:0;">添加车票信息</div>
   	<div class="panel-body">
 		<form class="form-horizontal" id="addForm">
+		  <input type="hidden" value="${ticket.id }" name="id">
 		  <div class="form-group">
 		    <label for="coachNum" class="col-md-2 control-label">车次</label>
 		    <div class="col-md-5">
-		      <input type="text" class="form-control" id="coachNum" name="coachNum" placeholder="车次..">
+		      <input type="text" class="form-control" id="coachNum" name="coachNum" value="${ticket.coachNum }" placeholder="车次..">
 		    </div>
 		    <div class="col-md-5 msg"></div>
 		  </div>
 		  <div class="form-group">
 		    <label for="terminus" class="col-md-2 control-label">终点站</label>
 		    <div class="col-md-5">
-		      <input type="text" class="form-control" id="terminus" name="terminus" placeholder="终点站..">
+		      <input type="text" class="form-control" id="terminus" name="terminus" value="${ticket.terminus }" placeholder="终点站..">
 		    </div>
 		    <div class="col-md-5 msg"></div>
 		  </div>
 		  <div class="form-group">
                 <label for="departureDate" class="col-md-2 control-label">发车日期</label>
                 <div style="float:left;padding-left:15px;padding-right:15px;" class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy/mm/dd" data-link-field="departureDate" data-link-format="yyyy/mm/dd">
-                    <input class="form-control" size="16" type="text" value="${today }" readonly id="departureDate" name="departureDate">
+                    <input class="form-control" size="16" type="text" value="${empty ticket.date?today:ticket.date }" readonly id="departureDate" name="departureDate">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
@@ -153,7 +153,7 @@
 		  <div class="form-group">
                 <label for="departureTime" class="col-md-2 control-label">发车时间</label>
                 <div style="float:left;padding-left:15px;padding-right:15px;" class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="departureTime" data-link-format="hh:ii">
-                    <input class="form-control" size="16" type="text" value="" readonly id="departureTime" name="departureTime">
+                    <input class="form-control" size="16" type="text" value="${ticket.time }" readonly id="departureTime" name="departureTime">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
                 </div>
@@ -162,26 +162,36 @@
 		  <div class="form-group">
 		    <label for="price" class="col-md-2 control-label">票价</label>
 		    <div class="col-md-5">
-		      <input type="number" class="form-control" id="price" name="price" placeholder="票价..">
+		      <input type="number" class="form-control" id="price" name="price" value="${ticket.price }" placeholder="票价..">
 		    </div>
 		    <div class="col-md-5 msg"></div>
 		  </div>
 		  <div class="form-group">
 		    <label for="totalNum" class="col-md-2 control-label">可售</label>
 		    <div class="col-md-5">
-		      <input type="text" class="form-control" id="totalNum" name="totalNum" placeholder="可售..">
+		      <input type="text" class="form-control" id="totalNum" name="totalNum"  value="${ticket.totalNum }" placeholder="可售..">
 		    </div>
 		    <div class="col-md-5 msg"></div>
 		  </div>
 		  <div class="form-group">
 		    <label for="coachType" class="col-md-2 control-label">车型</label>
 		    <div class="col-md-5">
-		      <label class="radio-inline">
-				  <input type="radio" name="coachType" id="coachType1" value="1" checked> 大型卧铺
-				</label>
-				<label class="radio-inline">
-				  <input type="radio" name="coachType" id="coachType2" value="2"> 大型座席
-				</label>
+		      <c:if test="${empty ticket.coachType }">
+			      	<label class="radio-inline">
+					  <input type="radio" name="coachType" id="coachType1" value="大型卧铺" checked> 大型卧铺
+					</label>
+					<label class="radio-inline">
+					  <input type="radio" name="coachType" id="coachType2" value="大型座席"> 大型座席
+					</label>
+				</c:if>
+				<c:if test="${not empty ticket.coachType }">
+			      	<label class="radio-inline">
+					  <input type="radio" name="coachType" id="coachType1" value="大型卧铺" <c:if test="${ticket.coachType=='大型卧铺' }">checked</c:if>> 大型卧铺
+					</label>
+					<label class="radio-inline">
+					  <input type="radio" name="coachType" id="coachType2" value="大型座席" <c:if test="${ticket.coachType=='大型座席' }">checked</c:if>> 大型座席
+					</label>
+				</c:if>
 		    </div>
 		    <div class="col-md-5 msg"></div>
 		  </div>
